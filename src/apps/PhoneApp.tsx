@@ -12,7 +12,7 @@ import { RouteProp } from "@react-navigation/native";
 import { RouteNames, RouteTypeList } from "../RouteNames";
 
 /**
- * Propriétés de la page d'un film.
+ * Propriétés de la page d'un telephone.
  */
 interface PhoneAppProperties {
   // Paramètres reçus pour la page.
@@ -61,8 +61,8 @@ export function PhoneApp(props: Readonly<PhoneAppProperties>) {
 
   return (
     <View>
-      {phone && ( // Si le film est chargé, on l'affiche.
-        <PhoneComponent phone={phone} completeInformations />
+      {phone && ( // Si le phone est chargé, on l'affiche.
+        <PhoneComponent phone={phone} completeInformations={true} />
       )}
       <Button
         title={isFavorite ? "Supprimer des favoris" : "Ajouter au favoris"}

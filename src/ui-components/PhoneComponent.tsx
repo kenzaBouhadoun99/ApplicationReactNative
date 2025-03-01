@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Phone } from "../models/Phone";
 import { Surface } from "@react-native-material/core";
 
@@ -23,7 +23,6 @@ interface PhoneComponentProperties {
 export default function PhoneComponent(
   props: Readonly<PhoneComponentProperties>,
 ) {
-  // Navigation entre pages.
   const navigation = useNavigation<NativeStackNavigationProp<RouteTypeList>>();
 
   return (
@@ -31,7 +30,7 @@ export default function PhoneComponent(
       <TouchableOpacity
         activeOpacity={props.completeInformations ? 1 : 0.7}
         onPress={() => {
-          if (props.completeInformations !== false) {
+          if (!props.completeInformations) {
             navigation.navigate(RouteNames.Phone, {
               phoneId: props.phone.id,
             } as never);
@@ -41,17 +40,7 @@ export default function PhoneComponent(
         {/* Modèle du téléphone */}
         <Text style={styles.title}>{props.phone.model}</Text>
 
-        {/* Informations principales */}
-        <View style={styles.infoContainer}>
-          <Text style={styles.label}>Constructeur :</Text>
-          <Text style={styles.value}>{props.phone.constructor}</Text>
-        </View>
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.label}>Système :</Text>
-          <Text style={styles.value}>{props.phone.os}</Text>
-        </View>
-
+        {/* Prix (Toujours affiché) */}
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Prix :</Text>
           <Text style={[styles.value, styles.price]}>
@@ -59,26 +48,55 @@ export default function PhoneComponent(
           </Text>
         </View>
 
-        {/* Informations sur le vendeur */}
-        <View style={styles.salerContainer}>
-          <Text style={styles.label}>Vendeur :</Text>
-          <Text style={styles.value}>{props.phone.saler}</Text>
-          <Text style={styles.salerLocation}>
-            ({props.phone.salerCity}, {props.phone.salerCountry})
-          </Text>
-        </View>
-
-        {/* Description */}
+        {/* Description (Toujours affichée) */}
         <Text style={styles.description}>
           {typeof props.phone.description === "string"
             ? props.phone.description
             : "Aucune description disponible"}
         </Text>
 
-        {/* Date de sortie */}
+        {/* Date de sortie (Toujours affichée) */}
         <Text style={styles.releaseDate}>
           📅 Sortie : {props.phone.releaseDate}
         </Text>
+
+        {/* Afficher ces infos UNIQUEMENT si completeInformations est true */}
+        {props.completeInformations && (
+          <>
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Constructeur :</Text>
+              <Text style={styles.value}>{props.phone.constructor}</Text>
+            </View>
+
+            <View style={styles.infoContainer}>
+              <Text style={styles.label}>Système :</Text>
+              <Text style={styles.value}>{props.phone.os}</Text>
+            </View>
+
+            {/* Infos vendeur */}
+            <View style={styles.salerContainer}>
+              <Text style={styles.label}>Vendeur :</Text>
+              <Text style={styles.value}>{props.phone.saler}</Text>
+              <Text style={styles.salerLocation}>
+                ({props.phone.salerCity}, {props.phone.salerCountry})
+              </Text>
+              <Text style={styles.value}>📞 {props.phone.phone}</Text>
+              <Text style={styles.value}>
+                Genre : {props.phone.salerGender === "male" ? "Homme" : "Femme"}
+              </Text>
+            </View>
+
+            {/* Avatar du vendeur */}
+            {props.phone.salerAvatar && (
+              <View style={styles.avatarContainer}>
+                <Image
+                  source={{ uri: props.phone.salerAvatar }}
+                  style={styles.avatar}
+                />
+              </View>
+            )}
+          </>
+        )}
       </TouchableOpacity>
     </Surface>
   );
@@ -121,6 +139,7 @@ const styles = StyleSheet.create({
   },
   salerContainer: {
     marginVertical: 8,
+    backgroundColor: "#F5F5F5",
   },
   salerLocation: {
     fontSize: 14,
@@ -137,5 +156,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontStyle: "italic",
     color: "#666",
+  },
+  avatarContainer: {
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: "#F5F5F5",
   },
 });

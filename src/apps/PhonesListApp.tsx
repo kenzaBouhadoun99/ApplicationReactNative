@@ -121,7 +121,11 @@ export function PhonesListApp() {
       {/* Liste des téléphones filtrés */}
       {filteredPhones.length > 0 ? (
         filteredPhones.map((phone) => (
-          <PhoneComponent key={phone.id} phone={phone} />
+          <PhoneComponent
+            key={phone.id}
+            phone={phone}
+            completeInformations={false}
+          />
         ))
       ) : (
         <Text style={styles.noResults}>Aucune annonce trouvée</Text>
