@@ -30,6 +30,8 @@ Si le fichier `package.json` a été correctement repris avant d'exécuter `npm 
   - `npm i -D eslint prettier`
   - `npm install --save-dev eslint-config-prettier eslint-plugin-prettier`
 
+- **Utilisation d'ESLint et Prettier** :
+  - Faire >FormatDocument sur chaque fichiers 
 
 ## Fonctionnalités ajoutées :
 ### 1. **Filtres Avancés**
