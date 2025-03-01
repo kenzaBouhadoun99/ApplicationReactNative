@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import MovieComponent from "../ui-components/MovieComponent";
-import { Movie } from "../models/Movie";
+import PhoneComponent from "../ui-components/PhoneComponent";
+import { Phone } from "../models/Phone";
 import { View, StyleSheet } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button } from "@react-native-material/core";
 import { useDispatch, useSelector } from "react-redux";
-import { addMovie, delMovie, IRootState } from "../Store";
-import { MoviesList } from "../models/MoviesList";
+import { addPhone, delPhone, IRootState } from "../Store";
+import { PhonesList } from "../models/PhonesList";
 import { RouteProp } from "@react-navigation/native";
-import { RouteTypeList , RouteNames} from "../Routes";
+import { RouteNames, RouteTypeList } from "../RouteNames";
 
 /**
  * Propriétés de la page d'un film.
  */
-interface MovieAppProperties {
+interface PhoneAppProperties {
   // Paramètres reçus pour la page.
-  route: RouteProp<RouteTypeList, "Movie">;
+  route: RouteProp<RouteTypeList, "Phone">;
 }
 
 /**
  * Affichage des informations complètes d'un film.
  */
-export function MovieApp(props: Readonly<MovieAppProperties>) {
+export function PhoneApp(props: Readonly<PhoneAppProperties>) {
   // Film à afficher.
-  const [movie, setMovie] = useState<Movie | undefined>({} as Movie);
+  const [phone, setPhone] = useState<Phone | undefined>({} as Phone);
   // Navigation entre pages.
   const navigation = useNavigation<NativeStackNavigationProp<RouteTypeList>>();
 
@@ -32,8 +32,8 @@ export function MovieApp(props: Readonly<MovieAppProperties>) {
   const dispatch = useDispatch();
 
   // Récupération des films favoris.
-  const favorites: Movie[] = useSelector(
-    (state: IRootState) => state.favorites.movies,
+  const favorites: Phone[] = useSelector(
+    (state: IRootState) => state.favorites.phones,
   );
 
   // Indicateur si le film est dans les favoris.
@@ -42,39 +42,39 @@ export function MovieApp(props: Readonly<MovieAppProperties>) {
   // Chargement initial du film à afficher.
   useEffect(() => {
     // Récupération de l'id du film depuis les paramètres.
-    const id = props.route.params.movieId;
+    const id = props.route.params.phoneId;
 
     // Sauvegarde du film correspondant dans l'état.
-    setMovie(
-      MoviesList.getInstance()
-        .getMovies()
-        .find((movie) => movie.id === id),
+    setPhone(
+      PhonesList.getInstance()
+        .getPhones()
+        .find((phone) => phone.id === id),
     );
   }, []);
 
   // Vérification si le film est dans les favoris.
   useEffect(() => {
     setIsFavorite(
-      favorites.find((favorite) => favorite.id === movie?.id) != null,
+      favorites.find((favorite) => favorite.id === phone?.id) != null,
     );
-  }, [favorites, movie]);
+  }, [favorites, phone]);
 
   return (
     <View>
-      {movie && ( // Si le film est chargé, on l'affiche.
-        <MovieComponent movie={movie} completeInformations />
+      {phone && ( // Si le film est chargé, on l'affiche.
+        <PhoneComponent phone={phone} completeInformations />
       )}
       <Button
         title={isFavorite ? "Supprimer des favoris" : "Ajouter au favoris"}
         style={styles.button}
         color={isFavorite ? "red" : "green"}
-        onPress={() => dispatch(isFavorite ? delMovie(movie) : addMovie(movie))}
+        onPress={() => dispatch(isFavorite ? delPhone(phone) : addPhone(phone))}
       />
       <Button
         title={"Retour"}
         style={styles.button}
         color={"green"}
-        onPress={() => navigation.navigate(RouteNames.MoviesList)}
+        onPress={() => navigation.navigate(RouteNames.PhonesList)}
       />
     </View>
   );

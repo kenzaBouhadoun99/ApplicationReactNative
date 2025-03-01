@@ -1,26 +1,26 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { Movie } from "./models/Movie";
+import { Phone } from "./models/Phone";
 
 // Gestion des favoris.
 const favoritesSlice = createSlice({
   name: "favorites",
   initialState: {
-    movies: [] as Movie[],
+    phones: [] as Phone[],
   },
   reducers: {
-    addMovie: (state, action) => {
-      state.movies.push(action.payload); // Ajouter un film aux favoris.
+    addPhone: (state, action) => {
+      state.phones.push(action.payload); // Ajouter un film aux favoris.
     },
-    delMovie: (state, action) => {
-      state.movies = state.movies.filter(
-        (movie) => movie.id != action.payload.id, // Supprimer un film des favoris.
+    delPhone: (state, action) => {
+      state.phones = state.phones.filter(
+        (phone) => phone.id != action.payload.id, // Supprimer un film des favoris.
       );
     },
   },
 });
 
 // Export des actions pour les favoris.
-export const { addMovie, delMovie } = favoritesSlice.actions;
+export const { addPhone, delPhone } = favoritesSlice.actions;
 
 // Configuration du store Redux.
 export const Store = configureStore({

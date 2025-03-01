@@ -2,46 +2,28 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FavoritesApp } from "./apps/FavoritesApp";
-import { MovieApp } from "./apps/MovieApp";
-import { MoviesListApp } from "./apps/MoviesListApp";
+import { PhoneApp } from "./apps/PhoneApp";
+import { PhonesListApp } from "./apps/PhonesListApp";
 import { Provider } from "react-redux";
 import { Store } from "./Store";
+import { RouteNames, RouteTypeList } from "./RouteNames"; // ✅ Import corrigé
 
-// Types des routes disponibles dans l'application.
-export type RouteTypeList = {
-  MoviesList: undefined;
-  Movie: { movieId: string };
-  Favorites: undefined;
-};
-
-/**
- * Liste des noms des routes.
- */
-export enum RouteNames {
-  MoviesList = "MoviesList",
-  Movie = "Movie",
-  Favorites = "Favorites",
-}
-
-/**
- * Définir et gérer la navigation entre les écrans de l'application.
- */
 export default function Routes() {
   const Stack = createNativeStackNavigator<RouteTypeList>();
 
   return (
     <Provider store={Store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={RouteNames.MoviesList}>
+        <Stack.Navigator initialRouteName={RouteNames.PhonesList}>
           <Stack.Screen
-            name={RouteNames.MoviesList}
-            component={MoviesListApp}
-            options={{ title: "Liste des films" }}
+            name={RouteNames.PhonesList}
+            component={PhonesListApp}
+            options={{ title: "Liste des téléphones" }}
           />
           <Stack.Screen
-            name={RouteNames.Movie}
-            component={MovieApp}
-            options={{ title: "Film" }}
+            name={RouteNames.Phone}
+            component={PhoneApp}
+            options={{ title: "Détails du téléphone" }}
           />
           <Stack.Screen
             name={RouteNames.Favorites}

@@ -31,3 +31,9 @@ Si le fichier `package.json` a été correctement repris avant d'exécuter `npm 
   - `npm install --save-dev eslint-config-prettier eslint-plugin-prettier`
 
 
+## Fonctionnalités ajoutées :
+### 1. **Filtres Avancés**
+   - Les utilisateurs peuvent maintenant filtrer les téléphones selon :
+     - **Prix minimum et maximum**
+     - **Année de sortie minimum et maximum**
+   - Un bouton permet d'afficher ou de masquer ces filtres à la demande de l'utilisateur.

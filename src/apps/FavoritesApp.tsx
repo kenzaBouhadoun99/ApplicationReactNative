@@ -1,8 +1,8 @@
 import React from "react";
-import { View } from "react-native";
-import { Movie } from "../models/Movie";
+import { ScrollView, View } from "react-native";
+import { Phone } from "../models/Phone";
 import { useSelector } from "react-redux";
-import MovieComponent from "../ui-components/MovieComponent";
+import PhoneComponent from "../ui-components/PhoneComponent";
 import { IRootState } from "../Store";
 
 /**
@@ -10,15 +10,19 @@ import { IRootState } from "../Store";
  */
 export function FavoritesApp() {
   // Obtient la liste des films favoris.
-  const favorites: Movie[] = useSelector(
-    (state: IRootState) => state.favorites.movies,
+  const favorites: Phone[] = useSelector(
+    (state: IRootState) => state.favorites.phones,
   );
 
   return (
-    <View>
-      {favorites?.map((movie) => (
-        <MovieComponent key={movie.id} movie={movie} />
-      ))}
-    </View>
+    <ScrollView>
+      {" "}
+      {/* Ajout du ScrollView ici */}
+      <View>
+        {favorites?.map((phone) => (
+          <PhoneComponent key={phone.id} phone={phone} />
+        ))}
+      </View>
+    </ScrollView>
   );
 }
